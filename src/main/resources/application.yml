@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sf-kafka-integration
+
+  # Kafka configuration will be added here
+  kafka:
+    bootstrap-servers: localhost:9092
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    com.sf.kafkaintegration: DEBUG

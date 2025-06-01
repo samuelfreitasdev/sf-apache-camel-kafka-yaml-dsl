@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: sf-kafka-integration-test
+
+  # Test-specific Kafka configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_TEST_BOOTSTRAP_SERVERS:localhost:9092}
+
+# Test-specific logging configuration
+logging:
+  level:
+    root: INFO
+    com.sf.kafkaintegration: DEBUG
