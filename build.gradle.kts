@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.5.0"
     id("io.spring.dependency-management") version "1.1.7"
+    id("com.diffplug.spotless") version "7.0.4"
 }
 
 group = "com.sf"
@@ -64,4 +65,17 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+spotless {
+    // if you are using build.gradle.kts, instead of 'spotless {' use:
+    // configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    kotlin {
+        // by default the target is every '.kt' and '.kts` file in the java sourcesets
+        ktlint() // has its own section below
+    }
+    kotlinGradle {
+        target("*.gradle.kts") // default target for kotlinGradle
+        ktlint() // or ktfmt() or prettier()
+    }
 }

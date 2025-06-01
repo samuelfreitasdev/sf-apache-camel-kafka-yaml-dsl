@@ -2,12 +2,18 @@ spring:
   application:
     name: sf-kafka-integration
 
-  # Kafka configuration will be added here
   kafka:
     bootstrap-servers: localhost:9092
 
-# Logging configuration
+camel:
+  component:
+    kafka:
+      brokers: ${spring.kafka.bootstrap-servers}
+      auto-offset-reset: earliest
+      group-id: sf-kafka-integration
+
 logging:
   level:
     root: INFO
     com.sf.kafkaintegration: DEBUG
+    org.apache.camel: INFO
