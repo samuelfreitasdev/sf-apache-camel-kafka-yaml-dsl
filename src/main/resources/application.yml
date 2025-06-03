@@ -6,6 +6,10 @@ spring:
     bootstrap-servers: localhost:9092
 
 camel:
+  main:
+    routes-include-pattern: classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*,routes/*.yaml
+    context-reload-enabled: true
+
   component:
     kafka:
       brokers: ${spring.kafka.bootstrap-servers}

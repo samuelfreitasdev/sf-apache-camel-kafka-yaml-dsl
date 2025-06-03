@@ -1,0 +1,28 @@
+- beans:
+    - name: kafkaIdempotentRepository
+      type: org.apache.camel.processor.idempotent.kafka.KafkaIdempotentRepository
+      constructors:
+        0: test
+        1: localhost:9092
+
+- route:
+    id: "kafka-publisher"
+    description: "Route to publish messages to Kafka"
+    from:
+      uri: "timer://foo?fixedRate=true&period=60000"
+      steps:
+        - log: "PRODUCING: ${body}"
+        - to: "kafka:test?brokers=localhost:9092"
+
+- route:
+    id: "kafka-consumer"
+    description: "Route to consume messages from Kafka"
+    from:
+      uri: "kafka:test?brokers=localhost:9092"
+      steps:
+        - idempotent-consumer:
+            idempotent-repository: "kafkaIdempotentRepository"
+            simple: "${header.id}"
+            skip-duplicate: true
+        - log: "CONSUMER ${body}"
+
