@@ -5,14 +5,17 @@
         0: test
         1: localhost:9092
 
-- route:
-    id: "kafka-publisher"
-    description: "Route to publish messages to Kafka"
-    from:
-      uri: "timer://foo?fixedRate=true&period=60000"
-      steps:
-        - log: "PRODUCING: ${body}"
-        - to: "kafka:test?brokers=localhost:9092"
+#- route:
+#    id: "kafka-publisher"
+#    description: "Route to publish messages to Kafka"
+#    from:
+#      uri: "timer://foo?fixedRate=true&period=1000"
+#      steps:
+#        - set-header:
+#            name: "id"
+#            simple: "${date:now:yyyyMMddHHmmssSSS}-${random(1000)}"
+#        - log: "PRODUCING ID: ${header.id} ${body}"
+#        - to: "kafka:test?brokers=localhost:9092"
 
 - route:
     id: "kafka-consumer"
@@ -24,5 +27,5 @@
             idempotent-repository: "kafkaIdempotentRepository"
             simple: "${header.id}"
             skip-duplicate: true
-        - log: "CONSUMER ${body}"
+        - log: "CONSUMER  ${body}"
 
